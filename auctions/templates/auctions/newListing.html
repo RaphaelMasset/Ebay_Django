@@ -1,0 +1,20 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+    <h2>New Auction !</h2>
+
+    <form action="{% url 'index' %}" method="POST">
+        {% csrf_token %}
+        <div class="form-group">
+            <input autofocus class="form-control" type="text" name="auctionName" placeholder="Auction Name" maxlength="20">
+            <input autofocus class="form-control" type="text" name="auctionPrice" placeholder="Auction Price" maxlength="20">
+        </div>
+        <div class="form-group">
+            <label for="markdownInput">Auction Description :</label>
+            <textarea class="form-control" type="text" name="auctionDescription"  row="4" col="50" value="markdownInput " maxlength="20"></textarea>
+        </div>
+        <input class="btn btn-primary" type="submit" value="Create">
+    </form>
+
+
+{% endblock %}

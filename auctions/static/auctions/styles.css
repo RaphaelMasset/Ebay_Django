@@ -1,0 +1,16 @@
+body {
+    padding: 10px;
+}
+
+.listing{
+    display: flex;
+    border: solid gray;
+    gap: 10px;
+    padding: 16px;
+}
+
+.coreListing{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}

@@ -1,0 +1,20 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+    <h2>Active Listings</h2>
+    {% load static %}
+
+    {% for auction in auctions %}
+
+    <div class="listing" >
+        <img src="{% static 'chaise.png'%}" style="height: 160px;" default="Auction picture">
+        <div class="coreListing">
+            <div>{{auction.name}}</div>
+            <div>Price: {{auction.sprice}} £</div>
+            <div maxlength="10">{{auction.description|slice:":500"}}</div>
+        </div>    
+    </div>
+        
+    {% endfor %}
+
+{% endblock %}
