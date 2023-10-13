@@ -5,6 +5,9 @@ from django.shortcuts import render
 from django.urls import reverse
 from django.contrib import messages
 
+import re
+from datetime import date # todayDate = date.today()
+
 from .models import User, Auctions, Comments, Bids
 
 def newListing(request):
@@ -16,18 +19,17 @@ def newListing(request):
         auctionPrice = request.POST['auctionPrice']
         auctionDescription = request.POST['auctionDescription']
 
-        if len(auctionName) > 5 and len(auctionDescription) > 5 and auctionPrice.isdigit():  ##lets do this verificationo with javascript?
-            messages.info(request, 'Sucessfully added auction!')  ##does not work
-            return render(request, "auctions/index.html")
+        if re.search(r"^[a-zA-Z].{2}.*$", auctionName) and re.search(r"^[1-9]+$", auctionPrice) and re.search(r"^[a-zA-Z]*$", auctionDescription):
+            return render(request, "auctions/index.html",)
         else:
-            messages.info(request, 'Input Error')  ##does not work
-    else:
-        return render(request, "auctions/newListing.html")
-
+            return render(request, "auctions/newListing.html", {
+                "error": "Invalid Input"
+            })
+ 
+    return render(request, "auctions/newListing.html",)
 
 def index(request):
     return render(request, "auctions/index.html", {"auctions": Auctions.objects.all()})
-
 
 
 def login_view(request):
