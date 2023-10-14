@@ -22,8 +22,7 @@ class Auctions(models.Model):
 class Comments(models.Model):
     commentId = models.AutoField(primary_key=True)
     actionId = models.ForeignKey(Auctions, on_delete=models.CASCADE, related_name="Avis") 
-
-    userName = models.CharField(max_length=64)
+    userName = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True, related_name="author")
     comment = models.CharField(max_length=500)
     commentTime = models.DateField()
 

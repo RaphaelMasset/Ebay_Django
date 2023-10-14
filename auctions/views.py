@@ -1,7 +1,7 @@
 from django.contrib.auth import authenticate, login, logout
 from django.db import IntegrityError
 from django.http import HttpResponse, HttpResponseRedirect
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.urls import reverse
 from django.contrib import messages
 
@@ -35,9 +35,15 @@ def index(request):
     return render(request, "auctions/index.html", {"auctions": Auctions.objects.all()})
 
 def item(request, title):
-    item = Auctions.objects.get(name=title)
+
+    auction = get_object_or_404(Auctions, name=title)
+
+    # Retrieve comments related to the specific auction
+    comments = Comments.objects.filter(actionId=auction)
+
     return render(request, "auctions/item.html", {
-        "auction": item
+        "auction": Auctions.objects.get(name=title),
+        "comments": comments
     })
 
 

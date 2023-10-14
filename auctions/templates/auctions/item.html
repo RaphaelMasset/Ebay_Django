@@ -9,5 +9,14 @@
         <div>Price: {{auction.sprice}} £</div>
         <div>{{auction.description}}</div>
     </div>    
-</div> 
+</div>
+{% for comment in comments %}
+<div class="comments" >
+    <div class="coreListing">
+        <div>{{comment.userName}}</div>
+        <div>{{comment.comment}}</div>
+    </div>    
+</div-->
+{% endfor %}
+
 {% endblock %}
