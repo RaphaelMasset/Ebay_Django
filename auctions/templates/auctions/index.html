@@ -5,16 +5,15 @@
     {% load static %}
 
     {% for auction in auctions %}
-
     <div class="listing" >
-        <img src="{% static 'chaise.png'%}" style="height: 160px;" default="Auction picture">
-        <div class="coreListing">
-            <div>{{auction.name}}</div>
-            <div>Price: {{auction.sprice}} £</div>
-            <div maxlength="10">{{auction.description|slice:":500"}}</div>
-        </div>    
-    </div>
+        <img src="{{ auction.picture }}"  default="Auction picture">
         
+        <div class="coreListing">
+            <div><a href="{% url 'item' title=auction.name %}">{{auction.name}}</a></div>
+            <div>Price: {{auction.sprice}} £</div>
+            <div>{{auction.description|slice:":300"}}</div>
+        </div>    
+    </div>    
     {% endfor %}
 
 {% endblock %}

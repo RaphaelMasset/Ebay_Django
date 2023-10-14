@@ -18,9 +18,12 @@ def newListing(request):
         auctionName = request.POST['auctionName']
         auctionPrice = request.POST['auctionPrice']
         auctionDescription = request.POST['auctionDescription']
+        auctionImageUrl = request.POST['auctionDescription']
 
-        if re.search(r"^[a-zA-Z].{2}.*$", auctionName) and re.search(r"^[1-9]+$", auctionPrice) and re.search(r"^[a-zA-Z]*$", auctionDescription):
-            return render(request, "auctions/index.html",)
+        if re.search(r"^[a-zA-Z].{2}.*$", auctionName) and re.search(r"^[0-9]+$", auctionPrice) and re.search(r"^[a-zA-Z]*.*$", auctionDescription):
+            NewAuction = Auctions(name=auctionName, description=auctionDescription, sprice=auctionPrice, picture=auctionImageUrl)
+            NewAuction.save()
+            return HttpResponseRedirect(reverse(index))
         else:
             return render(request, "auctions/newListing.html", {
                 "error": "Invalid Input"
@@ -30,6 +33,12 @@ def newListing(request):
 
 def index(request):
     return render(request, "auctions/index.html", {"auctions": Auctions.objects.all()})
+
+def item(request, title):
+    item = Auctions.objects.get(name=title)
+    return render(request, "auctions/item.html", {
+        "auction": item
+    })
 
 
 def login_view(request):

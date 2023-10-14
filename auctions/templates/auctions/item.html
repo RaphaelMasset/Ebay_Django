@@ -1,0 +1,13 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+<div class="listing" >
+    <img class="ItemImg" src="{{ auction.picture }}"  default="Auction picture">
+    
+    <div class="coreListing">
+        <div>{{auction.name}}</div>
+        <div>Price: {{auction.sprice}} £</div>
+        <div>{{auction.description}}</div>
+    </div>    
+</div> 
+{% endblock %}
