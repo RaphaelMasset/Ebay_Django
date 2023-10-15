@@ -6,7 +6,7 @@ from django.urls import reverse
 from django.contrib import messages
 
 import re
-from datetime import date # todayDate = date.today()
+from datetime import datetime, date # todayDate = date.today()
 
 from .models import User, Auctions, Comments, Bids
 
@@ -36,11 +36,19 @@ def index(request):
 
 def item(request, title):
 
+    if request.method == "POST":  
+        newComment = request.POST['newComment']
+        
+        #Auctions.objects.get(name=title)
+        auction_instance = Auctions.objects.get(name=title)
+        user_instance = request.user
+        newComment = Comments(auctionId=auction_instance, userName=user_instance, comment=newComment, commentTime=timeNow())
+        newComment.save()
+   
+
     auction = get_object_or_404(Auctions, name=title)
-
     # Retrieve comments related to the specific auction
-    comments = Comments.objects.filter(actionId=auction)
-
+    comments = Comments.objects.filter(auctionId=auction)
     return render(request, "auctions/item.html", {
         "auction": Auctions.objects.get(name=title),
         "comments": comments
@@ -97,3 +105,10 @@ def register(request):
         return HttpResponseRedirect(reverse("index"))
     else:
         return render(request, "auctions/register.html")
+
+def timeNow():
+    actualDate = datetime.now()
+    # Formatez la date selon le format "Oct. 15, 2023"
+    actualDate = datetime.now()
+    formatted_date = actualDate.strftime("%Y-%m-%d")
+    return formatted_date

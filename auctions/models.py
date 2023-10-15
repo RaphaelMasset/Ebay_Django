@@ -6,7 +6,7 @@ class User(AbstractUser):
     pass
 
 class Auctions(models.Model):
-    auctionId = models.AutoField(primary_key=True)
+    Id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=64)
     description = models.CharField(max_length=500)
     sprice = models.IntegerField()
@@ -21,10 +21,12 @@ class Auctions(models.Model):
 
 class Comments(models.Model):
     commentId = models.AutoField(primary_key=True)
-    actionId = models.ForeignKey(Auctions, on_delete=models.CASCADE, related_name="Avis") 
+    auctionId = models.ForeignKey(Auctions, on_delete=models.CASCADE, related_name="Avis") 
     userName = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True, related_name="author")
     comment = models.CharField(max_length=500)
     commentTime = models.DateField()
+    def __str__(self):
+        return f"{Auctions.auctionId}: {self.name} - Price: {self.sprice} - Description: {self.description}"
 
 class Bids(models.Model):
     actionId = models.AutoField(primary_key=True)

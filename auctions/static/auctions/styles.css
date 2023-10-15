@@ -55,3 +55,17 @@ a{
     width: 280px;
     max-height: 500px;
 }
+
+.comments{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.newComment{
+    padding: 16px;
+    margin: 10px;
+    border: solid gray;
+    border-radius: 15px;
+    margin-top: 25px;
+}
