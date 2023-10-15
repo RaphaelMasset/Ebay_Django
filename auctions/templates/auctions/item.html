@@ -9,16 +9,22 @@
         <div class="price">Current Price: {{auction.sprice}} £</div>
         <div>Description: {{auction.description}}</div>
 
-        {% if user.is_authenticated and user.username != auction.userName.username %} 
-        <form class="newBid" action="{% url 'item' title=auction.name %}" method="POST">
-            {% csrf_token %}
-            <input class="form-control" type="text" name="newBid" placeholder="How much ?" maxlength="15" minlength="1">
-            <input class="btn btn-primary" type="submit" value="Bid!">
-        </form>
+        {% if user.is_authenticated and user.username != auction.userName.username %}
+        <div class="buttons">
+            <form class="fav" action="{% url 'item' title=auction.name %}" method="POST">
+                {% csrf_token %}
+                <input class="btn btn-primary" type="submit" value="Add to Watchlist">
+            </form> 
+            <form class="newBid" action="{% url 'item' title=auction.name %}" method="POST">
+                {% csrf_token %}
+                <input class="form-control" type="text" name="newBid" placeholder="How much ?" maxlength="15" minlength="1">
+                <input class="btn btn-primary" type="submit" value="Bid!">
+            </form>
+        </div>
         {% else %}
         <form class="delate" action="{% url 'item' title=auction.name %}" method="POST">
             {% csrf_token %}
-            <input class="btn btn-primary" type="submit" value="Detale the auction">
+            <input class="btn btn-primary" type="submit" value="Accept the current price">
         </form>
         {% endif %}
     </div>    

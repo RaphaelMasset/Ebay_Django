@@ -33,6 +33,13 @@ class Bids(models.Model):
     userName = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True, related_name="bid_author")
 
     bid = models.IntegerField()
+
+class Watchlist(models.Model):
+    userName = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True, related_name="waList_author")
+    auctionId = models.ForeignKey(Auctions, on_delete=models.CASCADE) 
+
+
     #bidTime = models.DateField()
 
     #aa = Auctions(name="Chaise", description="Belle chaise", sprice=15)
+    

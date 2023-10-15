@@ -10,7 +10,7 @@
     <form action="{% url 'newListing' %}" method="POST">
         {% csrf_token %}
         <div class="form-group">
-            <input autofocus class="form-control" type="text" name="auctionName" placeholder="Auction Name" maxlength="30" minlength="1">
+            <input autofocus class="form-control" type="text" name="auctionName" placeholder="Auction Name" maxlength="60" minlength="1">
             <input autofocus class="form-control" type="text" name="auctionPrice" placeholder="Auction Price" maxlength="20" minlength="1">
         </div>
 
