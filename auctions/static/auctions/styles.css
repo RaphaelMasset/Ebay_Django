@@ -69,3 +69,22 @@ a{
     border-radius: 15px;
     margin-top: 25px;
 }
+
+.price{
+    display: flex;
+    gap: 20px;
+    align-items: center;
+}
+
+.newBid{
+    display: flex;
+    gap: 5px;
+    padding: 4px;
+    border: solid 1px gray;
+    border-radius: 10px;
+}
+
+.newBid, .delate {
+    margin-top: auto;
+    
+}

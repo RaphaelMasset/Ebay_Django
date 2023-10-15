@@ -36,14 +36,26 @@ def index(request):
 
 def item(request, title):
 
-    if request.method == "POST":  
-        newComment = request.POST['newComment']
-        
-        #Auctions.objects.get(name=title)
-        auction_instance = Auctions.objects.get(name=title)
-        user_instance = request.user
-        newComment = Comments(auctionId=auction_instance, userName=user_instance, comment=newComment, commentTime=timeNow())
-        newComment.save()
+    if request.method == "POST":
+
+        if 'newComment' in request.POST:
+            newComment = request.POST['newComment']
+            #Auctions.objects.get(name=title)
+            auction_instance = Auctions.objects.get(name=title)
+            user_instance = request.user
+            newComment = Comments(auctionId=auction_instance, userName=user_instance, comment=newComment, commentTime=timeNow())
+            newComment.save()
+
+        if 'newBid' in request.POST:
+            auction_instance = Auctions.objects.get(name=title)
+            if request.POST['newBid'].isnumeric() and auction_instance.sprice < int(request.POST['newBid']):
+                
+                user_instance = request.user
+                auction_instance.sprice = int(request.POST['newBid'])
+                auction_instance.save()
+                NewBid = Bids(auctionId=auction_instance, userName=user_instance, bid=request.POST['newBid'])
+                NewBid.save()
+
    
 
     auction = get_object_or_404(Auctions, name=title)

@@ -2,12 +2,25 @@
 
 {% block body %}
 <div class="listing" >
-    <img class="ItemImg" src="{{ auction.picture }}"  default="Auction picture">
-    
+    <img class="ItemImg" src="{{ auction.picture }}"  default="Auction picture">   
     <div class="coreListing">
         <div>{{auction.name}}</div>
-        <div>Price: {{auction.sprice}} £</div>
-        <div>{{auction.description}}</div>
+        <div>Seller: {{auction.userName}}</div>
+        <div class="price">Current Price: {{auction.sprice}} £</div>
+        <div>Description: {{auction.description}}</div>
+
+        {% if user.is_authenticated and user.username != auction.userName.username %} 
+        <form class="newBid" action="{% url 'item' title=auction.name %}" method="POST">
+            {% csrf_token %}
+            <input class="form-control" type="text" name="newBid" placeholder="How much ?" maxlength="15" minlength="1">
+            <input class="btn btn-primary" type="submit" value="Bid!">
+        </form>
+        {% else %}
+        <form class="delate" action="{% url 'item' title=auction.name %}" method="POST">
+            {% csrf_token %}
+            <input class="btn btn-primary" type="submit" value="Detale the auction">
+        </form>
+        {% endif %}
     </div>    
 </div>
 
@@ -20,6 +33,7 @@
 {% endfor %}
 </div>
 
+{% if user.is_authenticated %}
 <form class="newComment" action="{% url 'item' title=auction.name %}" method="POST">
     {% csrf_token %}
     <div class="form-group">
@@ -28,5 +42,6 @@
     </div>
     <input class="btn btn-primary" type="submit" value="Create">
 </form>
+{% endif %}
 
 {% endblock %}
