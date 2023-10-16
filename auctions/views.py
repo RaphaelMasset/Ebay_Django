@@ -58,8 +58,12 @@ def item(request, title):
 
         if 'delate' in request.POST:
             Auctions.objects.get(name=title).delete()
-      
             return HttpResponseRedirect(reverse("index"))
+        
+        if 'watchlist' in request.POST:
+            auction_instance = Auctions.objects.get(name=title)
+            newFav = Watchlist(auctionId=auction_instance, userName=request.user)
+            newFav.save()
 
     auction = get_object_or_404(Auctions, name=title)
     # Retrieve comments related to the specific auction
@@ -70,7 +74,12 @@ def item(request, title):
     })
 
 def watchlist(request):
+    user_watchlist = Watchlist.objects.filter(userName=request.user)
+    
+    auctions_in_watchlist = Auctions.objects.filter(Id__in=user_watchlist.values('auctionId'))
+
     return render(request, "auctions/watchlist.html", {
+        "auctions": auctions_in_watchlist
     })
 
 def categories(request):

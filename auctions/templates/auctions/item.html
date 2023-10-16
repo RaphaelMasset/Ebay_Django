@@ -11,9 +11,9 @@
 
         {% if user.is_authenticated and user.username != auction.userName.username %}
         <div class="buttons">
-            <form class="fav" action="{% url 'item' title=auction.name %}" method="POST">
+            <form class="watchlist" action="{% url 'item' title=auction.name %}" method="POST">
                 {% csrf_token %}
-                <input class="btn btn-primary" type="submit" value="Add to Watchlist">
+                <input class="btn btn-primary" type="submit" name="watchlist" value="Add to Watchlist">
             </form> 
             <form class="newBid" action="{% url 'item' title=auction.name %}" method="POST">
                 {% csrf_token %}
