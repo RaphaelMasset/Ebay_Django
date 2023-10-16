@@ -21,7 +21,7 @@ def newListing(request):
         auctionImageUrl = request.POST['auctionDescription']
 
         if re.search(r"^[a-zA-Z].{2}.*$", auctionName) and re.search(r"^[0-9]+$", auctionPrice) and re.search(r"^[a-zA-Z]*.*$", auctionDescription):
-            NewAuction = Auctions(name=auctionName, description=auctionDescription, sprice=auctionPrice, picture=auctionImageUrl)
+            NewAuction = Auctions(name=auctionName, description=auctionDescription, sprice=auctionPrice, picture=auctionImageUrl, userName=request.user)
             NewAuction.save()
             return HttpResponseRedirect(reverse(index))
         else:
@@ -56,7 +56,10 @@ def item(request, title):
                 NewBid = Bids(auctionId=auction_instance, userName=user_instance, bid=request.POST['newBid'])
                 NewBid.save()
 
-   
+        if 'delate' in request.POST:
+            Auctions.objects.get(name=title).delete()
+      
+            return HttpResponseRedirect(reverse("index"))
 
     auction = get_object_or_404(Auctions, name=title)
     # Retrieve comments related to the specific auction

@@ -24,7 +24,7 @@
         {% else %}
         <form class="delate" action="{% url 'item' title=auction.name %}" method="POST">
             {% csrf_token %}
-            <input class="btn btn-primary" type="submit" value="Accept the current price">
+            <input class="btn btn-primary" type="submit" name="delate" value="Accept the current price">
         </form>
         {% endif %}
     </div>    
