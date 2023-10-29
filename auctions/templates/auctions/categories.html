@@ -3,17 +3,30 @@
 {% block body %}
     <h2>Categories</h2>
     {% load static %}
+    <form action="{% url 'categories' %}" method="POST">
+        {% csrf_token %}
+        <label for="cars">Choose a categorie and submit :</label>
+        <select id="categorie" name="categorie">   
+            <option value="Properties">Properties</option>
+            <option value="Vehicules">Vehicules</option>
+            <option value="Services">Services</option>
+            <option value="House">House</option>
+            <option value="Garden">Garden</option>       
+        </select>
+        <input type="submit">
+    </form>
 
     {% for auction in auctions %}
-    <div class="listing" >
-        <img src="{{ auction.picture }}"  default="Auction picture">
-        
-        <div class="coreListing">
-            <div><a href="{% url 'item' title=auction.name %}">{{auction.name}}</a></div>
-            <div>Price: {{auction.sprice}} £</div>
-            <div>{{auction.description|slice:":300"}}</div>
-        </div>    
-    </div>    
+        {%if categorie and categorie == auction.categories %}
+            <div class="listing" >
+                <img src="{{ auction.picture }}"  default="Auction picture">
+                <div class="coreListing">
+                    <div><a href="{% url 'item' title=auction.name %}">{{auction.name}}</a></div>
+                    <div>Price: {{auction.sprice}} £</div>
+                    <div>{{auction.description|slice:":300"}}</div>
+                </div>    
+            </div>    
+        {%endif%} 
     {% endfor %}
 
 {% endblock %}

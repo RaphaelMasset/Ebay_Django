@@ -35,9 +35,8 @@ def index(request):
     return render(request, "auctions/index.html", {"auctions": Auctions.objects.all()})
 
 def item(request, title):
-
+    error = False
     if request.method == "POST":
-
         if 'newComment' in request.POST:
             newComment = request.POST['newComment']
             #Auctions.objects.get(name=title)
@@ -55,6 +54,8 @@ def item(request, title):
                 auction_instance.save()
                 NewBid = Bids(auctionId=auction_instance, userName=user_instance, bid=request.POST['newBid'])
                 NewBid.save()
+            elif auction_instance.sprice > int(request.POST['newBid']):
+                error = "bid more"
 
         if 'delate' in request.POST:
             Auctions.objects.get(name=title).delete()
@@ -70,7 +71,8 @@ def item(request, title):
     comments = Comments.objects.filter(auctionId=auction)
     return render(request, "auctions/item.html", {
         "auction": Auctions.objects.get(name=title),
-        "comments": comments
+        "comments": comments,
+        "error" : error
     })
 
 def watchlist(request):
@@ -83,7 +85,14 @@ def watchlist(request):
     })
 
 def categories(request):
+    if request.method == "POST":
+        categorie = request.POST["categorie"]
+    else: 
+        categorie = False
+
     return render(request, "auctions/categories.html", {
+        "auctions": Auctions.objects.all(),
+        "categorie": categorie
     })
 
 def login_view(request):

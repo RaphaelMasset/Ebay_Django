@@ -2,10 +2,11 @@
 
 {% block body %}
 <div class="listing" >
-    <img class="ItemImg" src="{{ auction.picture }}"  default="Auction picture">   
+    <img class="ItemImg" src="{{ auction.picture }}" default="Auction picture">   
     <div class="coreListing">
         <div>{{auction.name}}</div>
         <div>Seller: {{auction.userName}}</div>
+        <div>Categorie: {{auction.categories}}</div>
         <div class="price">Current Price: {{auction.sprice}} £</div>
         <div>Description: {{auction.description}}</div>
 
@@ -20,6 +21,9 @@
                 <input class="form-control" type="text" name="newBid" placeholder="How much ?" maxlength="15" minlength="1">
                 <input class="btn btn-primary" type="submit" value="Bid!">
             </form>
+            {% if error %}
+                <strong style="color: red;">{{error}}</strong>
+            {% endif %}
         </div>
         {% else %}
         <form class="delate" action="{% url 'item' title=auction.name %}" method="POST">
